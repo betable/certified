@@ -9,11 +9,14 @@ bindir=${prefix}/bin
 libdir=${prefix}/lib
 mandir=${prefix}/share/man
 
-all: certified_$(VERSION)-$(BUILD)_all.deb share/html/*.html
+debfile := certified_$(VERSION)-$(BUILD)_all.deb
 
-deb: certified_$(VERSION)-$(BUILD)_all.deb
+all: $(debfile) share/html/*.html
+
+deb: $(debfile)
 
 clean:
+	rm -f $(debfile)
 
 install: bin/* lib/* share/man/man*/*.[12345678]
 	install -d $(DESTDIR)$(bindir)
