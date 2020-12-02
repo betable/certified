@@ -1,5 +1,7 @@
 VERSION=1.0.0
 BUILD=1
+URL=https://github.com/betable/certified
+MAINTAINER=Betable Engineering <eng@betable.com>
 
 prefix=/usr/local
 bindir=${prefix}/bin
@@ -32,8 +34,8 @@ uninstall:
 	make install DESTDIR=install prefix=/usr
 	fakeroot fpm -a 'all' \
 		--description 'Generate and manage an internal CA for your company' \
-		--url 'https://github.com/rcrowley/certified' \
-		-m 'Richard Crowley <r@rcrowley.org>' \
+		--url '$(URL)' \
+		-m '$(MAINTAINER)' \
 		--vendor '' \
 		-n certified \
 		--category 'misc' \
@@ -48,8 +50,8 @@ uninstall:
 	make install DESTDIR=install prefix=/usr
 	fakeroot fpm -a 'all' \
 		--description 'Generate and manage an internal CA for your company' \
-		--url 'https://github.com/rcrowley/certified' \
-		-m 'Richard Crowley <r@rcrowley.org>' \
+		--url '$(URL)' \
+		-m '$(MAINTAINER)' \
 		--vendor '' \
 		-n certified \
 		--category 'misc' \
