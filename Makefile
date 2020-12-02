@@ -10,6 +10,8 @@ mandir=${prefix}/share/man
 
 all: certified_$(VERSION)-$(BUILD)_all.deb share/html/*.html
 
+deb: certified_$(VERSION)-$(BUILD)_all.deb
+
 clean:
 
 install: bin/* lib/* share/man/man*/*.[12345678]
@@ -69,4 +71,4 @@ share/html/%.1.html: share/man/man1/%.1.ronn
 	ronn --html --manual=Certified --style=toc $<
 	mv $(<:.ronn=.html) $@
 
-.PHONY: all clean install test uninstall
+.PHONY: all deb clean install test uninstall
