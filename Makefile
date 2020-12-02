@@ -1,4 +1,5 @@
-VERSION=1.0.0
+OS_VERSION_SUFFIX=$(shell if [ -f /etc/lsb-release ]; then . /etc/lsb-release; echo "+$${DISTRIB_ID}+$${DISTRIB_RELEASE}" | tr '[:upper:]' '[:lower:]'; fi)
+VERSION=1.0.4+betable$(OS_VERSION_SUFFIX)
 BUILD=1
 URL=https://github.com/betable/certified
 MAINTAINER=Betable Engineering <eng@betable.com>
