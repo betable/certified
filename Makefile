@@ -1,14 +1,22 @@
-VERSION=1.0.0
+OS_VERSION_SUFFIX=$(shell if [ -f /etc/lsb-release ]; then . /etc/lsb-release; echo "+$${DISTRIB_ID}+$${DISTRIB_RELEASE}" | tr '[:upper:]' '[:lower:]'; fi)
+VERSION=1.0.4+betable$(OS_VERSION_SUFFIX)
 BUILD=1
+URL=https://github.com/betable/certified
+MAINTAINER=Betable Engineering <eng@betable.com>
 
 prefix=/usr/local
 bindir=${prefix}/bin
 libdir=${prefix}/lib
 mandir=${prefix}/share/man
 
-all: certified_$(VERSION)-$(BUILD)_all.deb share/html/*.html
+debfile := certified_$(VERSION)-$(BUILD)_all.deb
+
+all: $(debfile) share/html/*.html
+
+deb: $(debfile)
 
 clean:
+	rm -f $(debfile)
 
 install: bin/* lib/* share/man/man*/*.[12345678]
 	install -d $(DESTDIR)$(bindir)
@@ -32,8 +40,8 @@ uninstall:
 	make install DESTDIR=install prefix=/usr
 	fakeroot fpm -a 'all' \
 		--description 'Generate and manage an internal CA for your company' \
-		--url 'https://github.com/rcrowley/certified' \
-		-m 'Richard Crowley <r@rcrowley.org>' \
+		--url '$(URL)' \
+		-m '$(MAINTAINER)' \
 		--vendor '' \
 		-n certified \
 		--category 'misc' \
@@ -48,8 +56,8 @@ uninstall:
 	make install DESTDIR=install prefix=/usr
 	fakeroot fpm -a 'all' \
 		--description 'Generate and manage an internal CA for your company' \
-		--url 'https://github.com/rcrowley/certified' \
-		-m 'Richard Crowley <r@rcrowley.org>' \
+		--url '$(URL)' \
+		-m '$(MAINTAINER)' \
 		--vendor '' \
 		-n certified \
 		--category 'misc' \
@@ -67,4 +75,4 @@ share/html/%.1.html: share/man/man1/%.1.ronn
 	ronn --html --manual=Certified --style=toc $<
 	mv $(<:.ronn=.html) $@
 
-.PHONY: all clean install test uninstall
+.PHONY: all deb clean install test uninstall
